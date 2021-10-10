@@ -6,7 +6,11 @@
 Your browser does not support the HTML canvas tag.</canvas>
 
 <script>
-let i = 0;
+let r = 0;
+let g = 255;
+let b = 0;
+let a = 100;
+let diff = 5;
 let c = document.getElementById("myCanvas");
 let ctx = c.getContext("2d");
 let centerX = c.width / 2;
@@ -17,13 +21,17 @@ ctx.beginPath();
 ctx.arc(centerX, centerY, radius,0,2*Math.PI);
 
 function change() {
-	let color = ["green", "blue",];
-    i = (i + 1) % color.length;
-    ctx.fillStyle = color[i];
-    ctx.fill();
+    g -= diff;
+    b += diff;
+    if (g==0 || b==255){
+        g = 255;
+        b = 0;
     }
-            
-setInterval(change, 1000);
+    ctx.fillStyle = 'rgba('+r+','+g+','+b+','+a+')';
+    ctx.fill();
+}
+
+setInterval(change, 50);
 
 </script> 
 
