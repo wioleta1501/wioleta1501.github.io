@@ -11,22 +11,31 @@ let g = 255;
 let b = 0;
 let a = 100;
 let diff = 5;
+let diffHeight = 25;
 let c = document.getElementById("myCanvas");
 let ctx = c.getContext("2d");
 let centerX = c.width / 2;
-let centerY = c.height / 2;
-let radius = 200;
-
-ctx.beginPath();
-ctx.arc(centerX, centerY, radius,0,2*Math.PI);
+let centerY = c.height-50;
+let radius = 50;
 
 function change() {
+    ctx.fillStyle = "white";
+    ctx.clearRect(0,0, c.width, c.height)
     g -= diff;
     b += diff;
     if (g==0 || b==255){
         g = 255;
         b = 0;
     }
+    centerY -=diffHeight;
+    if(centerY<=60){
+        diffHeight=-25;
+    }
+    if(centerY>=540){
+        diffHeight=25;
+    }
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius,0,2*Math.PI);
     ctx.fillStyle = 'rgba('+r+','+g+','+b+','+a+')';
     ctx.fill();
 }
