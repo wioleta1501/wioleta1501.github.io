@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Animacja</title>
 </head>
 <body>
-    <p>Animacja</p>
-</body>
-</html>
+    <canvas id="myGame" width="800" height="600" style="border:2px solid black;">
+        Your browser does not support the HTML canvas tag.</canvas>
+        
+        <script>
+        let c = document.getElementById("myGame");
+        let ctx = c.getContext("2d");
+        let ballX = c.width / 2;
+        let ballY = c.height-35;
+        let rectX = (c.width - 80) / 2;
+        let rectY = c.height-25;
+        let rectWidth = 80;
+        let rectHeight = 20;
+        let ballRadius = 10;
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, ballRadius,0,2*Math.PI);
+        ctx.rect(rectX, rectY, rectWidth, rectHeight)
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        
+        </script> 
+        
+        </body>
+        </html>
