@@ -11,6 +11,7 @@
         Your browser does not support the HTML canvas tag.</canvas>
         
         <script>
+        window.addEventListener("keydown", movePlatform, false);
         let c = document.getElementById("myGame");
         let ctx = c.getContext("2d");
         let ballX = c.width / 2;
@@ -20,11 +21,51 @@
         let rectWidth = 80;
         let rectHeight = 20;
         let ballRadius = 10;
-        ctx.beginPath();
-        ctx.arc(ballX, ballY, ballRadius,0,2*Math.PI);
-        ctx.rect(rectX, rectY, rectWidth, rectHeight)
-        ctx.fillStyle = 'green';
-        ctx.fill();
+
+        function drawBullet() {
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballRadius,0,2*Math.PI);
+            ctx.fillStyle = 'green';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPlatform() {
+            ctx.beginPath();
+            ctx.rect(rectX, rectY, rectWidth, rectHeight)
+            ctx.fillStyle = 'gray';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function movePlatform(e) {
+                ctx.clearRect(rectX, rectY, rectWidth, rectHeight);
+                switch(e.keyCode) {
+                    case 37:
+                        // left key pressed
+                        if(rectX !=0){
+                            rectX -= 5;
+                        } else {
+                            drawPlatform();
+                        }
+                        break;
+                    case 39:
+                        // right key pressed
+                        if(rectX != c.width-75){
+                            rectX += 5;
+                        } else{
+                            drawPlatform();
+                        }
+                        break;
+                    case 32:
+                        // spacebar 
+                        break;
+                }   
+                drawPlatform();
+            }
+
+        //drawBullet();
+        drawPlatform();
         
         </script> 
         
