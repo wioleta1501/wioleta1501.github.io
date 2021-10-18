@@ -14,18 +14,44 @@
         window.addEventListener("keydown", movePlatform, false);
         let c = document.getElementById("myGame");
         let ctx = c.getContext("2d");
-        let ballX = c.width / 2;
-        let ballY = c.height-35;
         let rectX = (c.width - 80) / 2;
         let rectY = c.height-25;
         let rectWidth = 80;
         let rectHeight = 20;
         let ballRadius = 10;
 
+        let ballX = rectX + (rectWidth/2);
+        let ballY = c.height-35;
+
         function drawBullet() {
+            ballX = rectX + (rectWidth/2);
+            clearBullet();
             ctx.beginPath();
             ctx.arc(ballX, ballY, ballRadius,0,2*Math.PI);
             ctx.fillStyle = 'green';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function shootBullet() {
+            clearBullet();
+
+            ballY -= 20;
+            drawBullet();
+        }
+        let i = 0;
+        function fire(){
+            while (i<10)
+            {
+                shootBullet();
+                i+=1;
+            }
+        }
+
+        function clearBullet() {
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballRadius+0.5 ,0, 360);
+            ctx.fillStyle = 'white';
             ctx.fill();
             ctx.closePath();
         }
@@ -39,32 +65,38 @@
         }
 
         function movePlatform(e) {
-                ctx.clearRect(rectX, rectY, rectWidth, rectHeight);
+                ctx.clearRect(rectX-1, rectY, rectWidth+2, rectHeight);
+                clearBullet();
                 switch(e.keyCode) {
                     case 37:
                         // left key pressed
                         if(rectX !=0){
-                            rectX -= 5;
+                            rectX -= 10;
                         } else {
+                            drawBullet();
                             drawPlatform();
+
                         }
                         break;
                     case 39:
                         // right key pressed
                         if(rectX != c.width-75){
-                            rectX += 5;
+                            rectX += 10;
                         } else{
+                            drawBullet();
                             drawPlatform();
+
                         }
                         break;
                     case 32:
                         // spacebar 
+                        fire(); 
                         break;
-                }   
+                }
+                drawBullet();
                 drawPlatform();
             }
-
-        //drawBullet();
+        drawBullet();
         drawPlatform();
         
         </script> 
