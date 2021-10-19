@@ -42,12 +42,12 @@
                 element[1]-=10;
                 if(element[1]<0)
                 bullets.splice(bullets.indexOf(element, 0),1);
-                targets.forEach(enemy => {
-                    let x = element[0]-enemy[0];
-                    let y = element[1]-enemy[1];
+                targets.forEach(target => {
+                    let x = element[0]-target[0];
+                    let y = element[1]-target[1];
                     let c = Math.sqrt( x*x + y*y );
                     if(c<2.5*ballRadius){
-                        targets.splice(targets.indexOf(enemy,0),1);
+                        targets.splice(targets.indexOf(target,0),1);
                         bullets.splice(bullets.indexOf(element, 0),1);
                     }
                 })
@@ -57,7 +57,7 @@
             });
             spawnDelay+=1;
             shootDelay+=1;
-            if(spawnDelay>=120){
+            if(spawnDelay>=110){
                 spawnDelay=0;
                 targets.forEach(target => {
                 target[1]+=50;
@@ -65,6 +65,13 @@
                     for(i=0;i<10;i++){
                     targets.push([65*(i+1),50,'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
                     }
+            }
+            if(targets[0][1]>400){
+                clearInterval(refresh);
+                ctx.clearRect(0, 0, 800, 600);
+                ctx.fillStyle = "red";
+                ctx.font = "150px Arial";
+                ctx.fillText("Game over", 20, 300);
             }
         }
         window.setInterval(refresh,50);
