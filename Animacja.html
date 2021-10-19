@@ -24,28 +24,35 @@
         let ballX = rectX + (rectWidth/2);
         let ballY = c.height-35;
 
-        let balls = [];
-        let enemies = [];
-        
+        let bullets = [];
+        let targets = [];
+
         let shootDelay = 0;
         for(j=0;j<3;j++)
         for(i=0;i<10;i++){
-            enemies.push([65*(i+1),50*(j+1),'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
+            targets.push([65*(i+1),50*(j+1),'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
         }
         function refresh(){
-
             ctx.clearRect(0, 0, 800, 600);
             drawPlatform();
-            balls.forEach(element => {
+            bullets.forEach(element => {
                 drawBullets(element[0],element[1]);
-                element[1]-=5;
+                element[1]-=10;
                 if(element[1]<0)
-                balls.splice(balls.indexOf(element, 0),1);
+                bullets.splice(bullets.indexOf(element, 0),1);
+                targets.forEach(enemy => {
+                    let x = element[0]-enemy[0];
+                    let y = element[1]-enemy[1];
+                    let c = Math.sqrt( x*x + y*y );
+                    if(c<2.5*ballRadius){
+                        targets.splice(targets.indexOf(enemy,0),1);
+                        bullets.splice(bullets.indexOf(element, 0),1);
+                    }
+                })
             })
-            enemies.forEach(element => {
-            drawEnemies(element[0],element[1],element[2]);
+            targets.forEach(element => {
+            drawTargets(element[0],element[1],element[2]);
             });
-
             shootDelay+=1;
         }
         window.setInterval(refresh,50);
@@ -53,7 +60,6 @@
         refresh();
 
         function movePlatform(e) {
-            
             switch(e.keyCode) {
                 case 37:
                 case 65:
@@ -68,14 +74,14 @@
                     }
                     break;
                 case 32:
-                    if(shootDelay*50>500){
-                        balls.push([rectX + (rectWidth/2),ballY]);
+                    if(shootDelay*100>500){
+                        bullets.push([rectX + (rectWidth/2),ballY]);
                         shootDelay=0;
                     }
                     break;
             }
-            
         }
+
         function drawPlatform() {
             ctx.beginPath();
             ctx.rect(rectX, rectY, rectWidth, rectHeight)
@@ -83,15 +89,14 @@
             ctx.fill();
         }
 
-        function drawBullets(x,y) {
-            
+        function drawBullets(x,y) { 
             ctx.beginPath();
             ctx.arc(x,y, ballRadius,0,2*Math.PI);
             ctx.fillStyle = 'green';
             ctx.fill();
         }
 
-        function drawEnemies(x,y,col){
+        function drawTargets(x,y,col){
             ctx.beginPath();
             ctx.arc(x, y, ballRadius*1.5 ,0,2*Math.PI)
             ctx.fillStyle = col;
