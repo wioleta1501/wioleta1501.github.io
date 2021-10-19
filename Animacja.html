@@ -7,7 +7,7 @@
     <title>Animacja</title>
 </head>
 <body>
-    <canvas id="myGame" width="800" height="600" style="border:2px solid black;">
+    <canvas id="myGame" width="800" height="600" style="background-color: black" style="border:2px solid black;">
         Your browser does not support the HTML canvas tag.</canvas>
         
         <script>
@@ -51,16 +51,19 @@
                         targets.splice(targets.indexOf(target,0),1);
                         bullets.splice(bullets.indexOf(element, 0),1);
                         points+=1;
-                        console.log(points)
+                        //console.log(points)
                     }
                 })
             })
             targets.forEach(element => {
             drawTargets(element[0],element[1],element[2]);
             });
+            ctx.fillStyle = "violet";
+            ctx.font = "25px Arial";
+            ctx.fillText("Points: " + points, 10, 25);
             spawnDelay+=1;
             shootDelay+=1;
-            if(spawnDelay>=110){
+            if(spawnDelay>=10){
                 spawnDelay=0;
                 targets.forEach(target => {
                 target[1]+=50;
@@ -75,6 +78,8 @@
                 ctx.fillStyle = "red";
                 ctx.font = "150px Arial";
                 ctx.fillText("Game over", 20, 300);
+                ctx.font = "70px Arial";
+                ctx.fillText("Your score: " + points, 160 ,400);
             }
         }
         window.setInterval(refresh,50);
@@ -107,14 +112,14 @@
         function drawPlatform() {
             ctx.beginPath();
             ctx.rect(rectX, rectY, rectWidth, rectHeight)
-            ctx.fillStyle = 'gray';
+            ctx.fillStyle = 'silver';
             ctx.fill();
         }
 
         function drawBullets(x,y) { 
             ctx.beginPath();
             ctx.arc(x,y, ballRadius,0,2*Math.PI);
-            ctx.fillStyle = 'green';
+            ctx.fillStyle = 'lime';
             ctx.fill();
         }
 
