@@ -28,6 +28,8 @@
         let targets = [];
 
         let shootDelay = 0;
+        let spawnDelay = 0;
+
         for(j=0;j<3;j++)
         for(i=0;i<10;i++){
             targets.push([65*(i+1),50*(j+1),'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
@@ -53,7 +55,17 @@
             targets.forEach(element => {
             drawTargets(element[0],element[1],element[2]);
             });
+            spawnDelay+=1;
             shootDelay+=1;
+            if(spawnDelay>=120){
+                spawnDelay=0;
+                targets.forEach(target => {
+                target[1]+=50;
+                })
+                    for(i=0;i<10;i++){
+                    targets.push([65*(i+1),50,'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
+                    }
+            }
         }
         window.setInterval(refresh,50);
             
