@@ -26,6 +26,8 @@
 
         let balls = [];
 
+        let shootDelay = 0;
+
         function refresh(){
 
             ctx.clearRect(0, 0, 800, 600);
@@ -33,8 +35,11 @@
             balls.forEach(element => {
                 drawBullets(element[0],element[1]);
                 element[1]-=5;
+                if(element[1]<0)
+                balls.splice(balls.indexOf(element, 0),1);
             })
 
+            shootDelay+=1;
         }
         window.setInterval(refresh,50);
             
@@ -56,7 +61,10 @@
                     }
                     break;
                 case 32:
-                    balls.push([rectX + (rectWidth/2),ballY]);
+                    if(shootDelay*50>500){
+                        balls.push([rectX + (rectWidth/2),ballY]);
+                        shootDelay=0;
+                    }
                     break;
             }
             
@@ -73,6 +81,13 @@
             ctx.beginPath();
             ctx.arc(x,y, ballRadius,0,2*Math.PI);
             ctx.fillStyle = 'green';
+            ctx.fill();
+        }
+
+        function drawEnemies(x,y,col){
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius*1.5 ,0,2*Math.PI)
+            ctx.fillStyle = col;
             ctx.fill();
         }
         
