@@ -25,9 +25,13 @@
         let ballY = c.height-35;
 
         let balls = [];
-
+        let enemies = [];
+        
         let shootDelay = 0;
-
+        for(j=0;j<3;j++)
+        for(i=0;i<10;i++){
+            enemies.push([65*(i+1),50*(j+1),'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
+        }
         function refresh(){
 
             ctx.clearRect(0, 0, 800, 600);
@@ -38,6 +42,9 @@
                 if(element[1]<0)
                 balls.splice(balls.indexOf(element, 0),1);
             })
+            enemies.forEach(element => {
+            drawEnemies(element[0],element[1],element[2]);
+            });
 
             shootDelay+=1;
         }
