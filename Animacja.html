@@ -31,6 +31,9 @@
         let spawnDelay = 0;
         let points = 0;
 
+        let sway = 2;
+        let swayCheck = 0;
+
         for(j=0;j<3;j++)
         for(i=0;i<10;i++){
             targets.push([65*(i+1),50*(j+1),'hsl(' + 360 * Math.random() + ', 50%, 50%)']);
@@ -44,7 +47,7 @@
                 if(element[1]<0)
                 bullets.splice(bullets.indexOf(element, 0),1);
                 targets.forEach(target => {
-                    let x = element[0]-target[0];
+                    let x = element[0]-sway-target[0];
                     let y = element[1]-target[1];
                     let c = Math.sqrt( x*x + y*y );
                     if(c<2.5*ballRadius){
@@ -56,8 +59,17 @@
                 })
             })
             targets.forEach(element => {
-            drawTargets(element[0],element[1],element[2]);
+            drawTargets(element[0]+sway,element[1],element[2]);
             });
+            if(swayCheck>30){
+                sway-=1
+            }
+            else{
+                sway+=1;
+            }
+            if(swayCheck==60)
+            swayCheck=0;
+            swayCheck+=1;
             ctx.fillStyle = "violet";
             ctx.font = "25px Arial";
             ctx.fillText("Points: " + points, 10, 25);
@@ -73,8 +85,8 @@
                     }
             }
             if(targets[0][1]>400){
-                clearInterval(refresh);
                 ctx.clearRect(0, 0, 800, 600);
+                clearInterval(refresh);
                 ctx.fillStyle = "red";
                 ctx.font = "150px Arial";
                 ctx.fillText("Game over", 20, 300);
