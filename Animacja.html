@@ -29,6 +29,7 @@
 
         let shootDelay = 0;
         let spawnDelay = 0;
+        let points = 0;
 
         for(j=0;j<3;j++)
         for(i=0;i<10;i++){
@@ -49,6 +50,8 @@
                     if(c<2.5*ballRadius){
                         targets.splice(targets.indexOf(target,0),1);
                         bullets.splice(bullets.indexOf(element, 0),1);
+                        points+=1;
+                        console.log(points)
                     }
                 })
             })
