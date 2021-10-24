@@ -9,3 +9,65 @@
 <body>
 <canvas id="myGame" width="800" height="600" style="background-color: black" style="border:2px solid black;">
     Your browser does not support the HTML canvas tag.</canvas>
+
+<script>
+    let c = document.getElementById("myGame");
+
+    window.addEventListener("keydown", moveCar, false);
+
+    let ctx = c.getContext("2d");
+    let carX = (c.width - 40) / 2;
+    let carY = c.height-100;
+    let carWidth = 40;
+    let carHeight = 60;
+
+    car_image = new Image();
+    car_image.src = 'assets/car.png';
+    car_image.onload = function() {
+        drawCar();
+    }
+
+    let cars = [];
+
+    function refresh() {
+        ctx.clearRect(0, 0, 800, 600);
+        drawCar();
+        cars.forEach(element => {
+            drawCar(element[0], element[1]);
+            element[1] -= 10;
+            if (element[1] < 0)
+                cars.splice(cars.indexOf(element, 0), 1);
+        })
+    }
+    window.setInterval(refresh,50);
+
+    refresh();
+
+    function moveCar(e) {
+        switch(e.keyCode) {
+            case 37:
+            case 65:
+                if(carX !=0){
+                    carX -= 20;
+                }
+                break;
+            case 39:
+            case 68:
+                if(carX != c.width-40){
+                    carX += 20;
+                }
+                break;
+        }
+    }
+
+    function drawCar(){
+        ctx.beginPath();
+        ctx.drawImage(car_image, carX, carY, carWidth, carHeight)
+    }
+
+
+
+</script>
+
+</body>
+</html>

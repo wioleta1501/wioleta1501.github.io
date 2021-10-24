@@ -24,7 +24,7 @@
         let ballX = rectX + (rectWidth/2);
         let ballY = c.height-35;
 
-        let bullets = [];
+        let cars = [];
         let targets = [];
 
         let shootDelay = 0;
@@ -43,11 +43,11 @@
         function refresh(){
             ctx.clearRect(0, 0, 800, 600);
             drawPlatform();
-            bullets.forEach(element => {
+            cars.forEach(element => {
                 drawBullets(element[0],element[1]);
                 element[1]-=10;
                 if(element[1]<0)
-                bullets.splice(bullets.indexOf(element, 0),1);
+                cars.splice(cars.indexOf(element, 0),1);
                 targets.forEach(target => {
                     let x = element[0]-sway-target[0];
                     let y = element[1]-target[1];
@@ -55,7 +55,7 @@
                     if (isGameOver == false){
                     if(c<2.5*ballRadius){
                         targets.splice(targets.indexOf(target,0),1);
-                        bullets.splice(bullets.indexOf(element, 0),1);
+                        cars.splice(cars.indexOf(element, 0),1);
                         points+=1;
                         //console.log(points)
                     }}
@@ -118,7 +118,7 @@
                     break;
                 case 32:
                     if(shootDelay*100>500){
-                        bullets.push([rectX + (rectWidth/2),ballY]);
+                        cars.push([rectX + (rectWidth/2),ballY]);
                         shootDelay=0;
                     }
                     break;
