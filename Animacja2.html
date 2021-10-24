@@ -35,8 +35,20 @@
     }
 
     straight2_image = new Image();
-    straight2_image.src = 'assets/straight1.png'
+    straight2_image.src = 'assets/straight2.png'
     straight2_image.onload = function () {
+        drawBackground();
+    }
+
+    straight3_image = new Image();
+    straight3_image.src = 'assets/straight3.png'
+    straight3_image.onload = function () {
+        drawBackground();
+    }
+
+    straight4_image = new Image();
+    straight4_image.src = 'assets/straight4.png'
+    straight4_image.onload = function () {
         drawBackground();
     }
 
@@ -76,8 +88,14 @@
         ctx.drawImage(straight1_image, 0, 0, 800, 600)
         backgroundDelay += 10;
         if(backgroundDelay>=20) {
-            backgroundDelay = 0;
             ctx.drawImage(straight2_image, 0, 0, 800, 600)
+        }
+        if(backgroundDelay>=40) {
+            ctx.drawImage(straight3_image, 0, 0, 800, 600)
+        }
+        if(backgroundDelay>=60) {
+            backgroundDelay = 0;
+            ctx.drawImage(straight4_image, 0, 0, 800, 600)
         }
     }
 
