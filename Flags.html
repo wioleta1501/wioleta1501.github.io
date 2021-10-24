@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Flags</title>
+</head>
+<style>
+    .outer {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border: 5px solid gray;
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    .outer-small {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 100%;
+        overflow: hidden;
+        z-index: 2;
+        margin-left: 10px;
+        margin-top: 30px;
+    }
+
+    .germany-black{
+        height: 34px;
+        width: 100px;
+        position: relative;
+        background-color: black;
+    }
+
+    .germany-red{
+        height: 34px;
+        width: 100px;
+        position: relative;
+        background-color: red;
+    }
+
+    .germany-yellow{
+        height: 34px;
+        width: 100px;
+        position: relative;
+        background-color: yellow;
+    }
+
+    .greenland-red {
+        height: 50px;
+        width: 100px;
+        position: relative;
+        background-color: red;
+    }
+
+    .greenland-white {
+        height: 50px;
+        width: 100px;
+        position: relative;
+        background-color: white;
+    }
+
+    .greenland-small-white {
+        height: 20px;
+        width: 40px;
+        position: relative;
+        background-color: white;
+    }
+
+    .greenland-small-red {
+        height: 20px;
+        width: 40px;
+        position: relative;
+        background-color: red;
+    }
+
+</style>
+<body>
+<div class="outer">
+    <div class="germany-black">
+    </div>
+    <div class="germany-red">
+    </div>
+    <div class="germany-yellow">
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="outer">
+
+    <div class="outer-small">
+        <div class="greenland-small-red">
+        </div>
+        <div class="greenland-small-white">
+        </div>
+    </div>
+    <div class="greenland-white">
+    </div>
+    <div class="greenland-red">
+    </div>
+</div>
+
+</body>
+</html>
