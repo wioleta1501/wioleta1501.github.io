@@ -20,6 +20,7 @@
     let carY = c.height-100;
     let carWidth = 40;
     let carHeight = 60;
+    let backgroundDelay = 0;
 
     car_image = new Image();
     car_image.src = 'assets/car.png';
@@ -27,9 +28,21 @@
         drawCar();
     }
 
+    straight1_image = new Image();
+    straight1_image.src = 'assets/straight1.png'
+    straight1_image.onload = function () {
+        drawBackground();
+    }
+
+    straight2_image = new Image();
+    straight2_image.src = 'assets/straight1.png'
+    straight2_image.onload = function () {
+        drawBackground();
+    }
 
     function refresh() {
         ctx.clearRect(0, 0, 800, 600);
+        drawBackground();
         drawCar();
     }
     window.setInterval(refresh,50);
@@ -40,13 +53,13 @@
         switch(e.keyCode) {
             case 37:
             case 65:
-                if(carX !=0){
+                if(carX !=200){
                     carX -= 20;
                 }
                 break;
             case 39:
             case 68:
-                if(carX != c.width-40){
+                if(carX != c.width-240){
                     carX += 20;
                 }
                 break;
@@ -58,7 +71,15 @@
         ctx.drawImage(car_image, carX, carY, carWidth, carHeight)
     }
 
-
+    function drawBackground() {
+        ctx.beginPath()
+        ctx.drawImage(straight1_image, 0, 0, 800, 600)
+        backgroundDelay += 10;
+        if(backgroundDelay>=20) {
+            backgroundDelay = 0;
+            ctx.drawImage(straight2_image, 0, 0, 800, 600)
+        }
+    }
 
 </script>
 
