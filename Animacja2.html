@@ -7,7 +7,7 @@
     <title>Animacja2</title>
 </head>
 <body>
-<canvas id="myGame" width="800" height="600" style="background-color: black" style="border:2px solid black;">
+<canvas id="myGame" width="800" height="600" style="background-color: gray" style="border:2px solid black;">
     Your browser does not support the HTML canvas tag.</canvas>
 
 <script>
@@ -16,11 +16,20 @@
     window.addEventListener("keydown", moveCar, false);
 
     let ctx = c.getContext("2d");
-    let carX = (c.width - 40) / 2;
+    let carX = c.width/2 - 20;
     let carY = c.height-100;
     let carWidth = 40;
     let carHeight = 60;
-    let backgroundDelay = 0;
+    let blockWidth = 20;
+    let blockHeight = 60;
+    let blockStartX = 200-blockWidth;
+    let blockStartY = 600;
+    let motion = 0;
+    let blocks = [];
+
+    for(let i=0;i<12;i++){
+        blocks.push([blockStartX,blockStartY-(i*blockHeight)]);
+    }
 
     car_image = new Image();
     car_image.src = 'assets/car.png';
@@ -28,36 +37,12 @@
         drawCar();
     }
 
-    straight1_image = new Image();
-    straight1_image.src = 'assets/straight1.png'
-    straight1_image.onload = function () {
-        drawBackground();
-    }
-
-    straight2_image = new Image();
-    straight2_image.src = 'assets/straight2.png'
-    straight2_image.onload = function () {
-        drawBackground();
-    }
-
-    straight3_image = new Image();
-    straight3_image.src = 'assets/straight3.png'
-    straight3_image.onload = function () {
-        drawBackground();
-    }
-
-    straight4_image = new Image();
-    straight4_image.src = 'assets/straight4.png'
-    straight4_image.onload = function () {
-        drawBackground();
-    }
-
     function refresh() {
         ctx.clearRect(0, 0, 800, 600);
         drawBackground();
         drawCar();
     }
-    window.setInterval(refresh,50);
+    window.setInterval(refresh,200);
 
     refresh();
 
@@ -65,13 +50,13 @@
         switch(e.keyCode) {
             case 37:
             case 65:
-                if(carX !=200){
+                if(carX !==200){
                     carX -= 20;
                 }
                 break;
             case 39:
             case 68:
-                if(carX != c.width-240){
+                if(carX !== c.width-240){
                     carX += 20;
                 }
                 break;
@@ -84,19 +69,78 @@
     }
 
     function drawBackground() {
-        ctx.beginPath()
-        ctx.drawImage(straight1_image, 0, 0, 800, 600)
-        backgroundDelay += 10;
-        if(backgroundDelay>=20) {
-            ctx.drawImage(straight2_image, 0, 0, 800, 600)
+        let trackWidth = 410;
+        for(let i=0; i<10; i++){
+            ctx.beginPath();
+            ctx.moveTo(blocks[i][0], blocks[i][1]);
+            ctx.lineTo(blocks[i][0]+blockWidth, blocks[i][1]);
+            ctx.lineTo(blocks[i+1][0]+blockWidth, blocks[i+1][1]);
+            ctx.lineTo(blocks[i+1][0], blocks[i+1][1]);
+            if(i%2===0){
+                if(motion==0)
+                    ctx.fillStyle = 'red';
+                else
+                    ctx.fillStyle = 'white';
+            }
+            else {
+                if(motion==1)
+                    ctx.fillStyle = 'red';
+                else
+                    ctx.fillStyle = 'white';
+            }
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(blocks[i][0]+trackWidth, blocks[i][1]);
+            ctx.lineTo(blocks[i][0]+blockWidth+trackWidth, blocks[i][1]);
+            ctx.lineTo(blocks[i+1][0]+blockWidth+trackWidth, blocks[i+1][1]);
+            ctx.lineTo(blocks[i+1][0]+trackWidth, blocks[i+1][1]);
+            if(i%2===0){
+                if(motion==0)
+                    ctx.fillStyle = 'red';
+                else
+                    ctx.fillStyle = 'white';
+            }
+            else {
+                if(motion==1)
+                    ctx.fillStyle = 'red';
+                else
+                    ctx.fillStyle = 'white';
+            }
+            ctx.fill();
         }
-        if(backgroundDelay>=40) {
-            ctx.drawImage(straight3_image, 0, 0, 800, 600)
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(0,c.height);
+        for(let j=0; j<11; j++){
+            ctx.lineTo(blocks[j][0],blocks[j][1]);
         }
-        if(backgroundDelay>=60) {
-            backgroundDelay = 0;
-            ctx.drawImage(straight4_image, 0, 0, 800, 600)
+        ctx.fillStyle = 'green';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(800,0);
+        ctx.lineTo(800,c.height);
+        for(let j=0; j<11; j++){
+            ctx.lineTo(blocks[j][0]+trackWidth+blockWidth,blocks[j][1]);
         }
+        ctx.fillStyle = 'gold';
+        ctx.fill();
+
+        ctx.beginPath();
+        for(let j=motion; j<11; j+=2){
+            ctx.moveTo(blocks[j][0]+(trackWidth/2), blocks[j][1]);
+            ctx.lineTo(blocks[j][0]+(blockWidth+trackWidth)/2, blocks[j][1]);
+            ctx.lineTo(blocks[j+1][0]+(blockWidth+trackWidth)/2, blocks[j+1][1]);
+            ctx.lineTo(blocks[j+1][0]+(trackWidth/2), blocks[j+1][1]);
+        }
+        ctx.fillStyle = 'white';
+        ctx.fill();
+
+        if(motion==0)
+            motion=1;
+        else
+            motion=0;
     }
 
 </script>
