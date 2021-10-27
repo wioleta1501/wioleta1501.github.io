@@ -16,16 +16,22 @@
     window.addEventListener("keydown", moveCar, false);
 
     let ctx = c.getContext("2d");
-    let carX = c.width/2 - 20;
-    let carY = c.height-100;
-    let carWidth = 40;
+    let carWidth = 45;
     let carHeight = 60;
+    let carX = 375;
+    let carY = c.height-120;
     let blockWidth = 20;
     let blockHeight = 60;
-    let blockStartX = 200-blockWidth;
+    let blockStartX = 190;
     let blockStartY = 600;
+    let trackWidth = 400;
     let motion = 0;
     let blocks = [];
+    let curveL = 11;
+    let curveR = 11;
+    let checkL = true;
+    let checkR = true;
+    let lInterval;
 
     for(let i=0;i<12;i++){
         blocks.push([blockStartX,blockStartY-(i*blockHeight)]);
@@ -41,8 +47,24 @@
         ctx.clearRect(0, 0, 800, 600);
         drawBackground();
         drawCar();
+        if(checkL){
+            lInterval = window.setInterval(curveLeft,100);
+            curveLeft();
+            checkL = false;
+        }
+        if(blocks[11][0]<=20){
+            clearInterval(lInterval);
+            lInterval = window.setInterval(leftToStraight,100);
+            leftToStraight();
+            curveL=10;
+        }
+        if(blocks[0][0]<=blocks[11][0]){
+            clearInterval(lInterval);
+            curveL=11;
+        }
+
     }
-    window.setInterval(refresh,200);
+    window.setInterval(refresh,100);
 
     refresh();
 
@@ -50,13 +72,13 @@
         switch(e.keyCode) {
             case 37:
             case 65:
-                if(carX !==200){
+                if(carX >= blocks[1][0]+blockWidth+5){
                     carX -= 20;
                 }
                 break;
             case 39:
             case 68:
-                if(carX !== c.width-240){
+                if(carX <= blocks[1][0]+trackWidth-50){
                     carX += 20;
                 }
                 break;
@@ -69,7 +91,6 @@
     }
 
     function drawBackground() {
-        let trackWidth = 410;
         for(let i=0; i<10; i++){
             ctx.beginPath();
             ctx.moveTo(blocks[i][0], blocks[i][1]);
@@ -77,13 +98,13 @@
             ctx.lineTo(blocks[i+1][0]+blockWidth, blocks[i+1][1]);
             ctx.lineTo(blocks[i+1][0], blocks[i+1][1]);
             if(i%2===0){
-                if(motion==0)
+                if(motion===0)
                     ctx.fillStyle = 'red';
                 else
                     ctx.fillStyle = 'white';
             }
             else {
-                if(motion==1)
+                if(motion===1)
                     ctx.fillStyle = 'red';
                 else
                     ctx.fillStyle = 'white';
@@ -96,13 +117,13 @@
             ctx.lineTo(blocks[i+1][0]+blockWidth+trackWidth, blocks[i+1][1]);
             ctx.lineTo(blocks[i+1][0]+trackWidth, blocks[i+1][1]);
             if(i%2===0){
-                if(motion==0)
+                if(motion===0)
                     ctx.fillStyle = 'red';
                 else
                     ctx.fillStyle = 'white';
             }
             else {
-                if(motion==1)
+                if(motion===1)
                     ctx.fillStyle = 'red';
                 else
                     ctx.fillStyle = 'white';
@@ -137,11 +158,29 @@
         ctx.fillStyle = 'white';
         ctx.fill();
 
-        if(motion==0)
+        if(motion===0)
             motion=1;
         else
             motion=0;
     }
+
+    function curveLeft(){
+        for(let l=11; l>=curveL; l--){
+            blocks[l][0]-=5;
+        }
+        curveL-=1;
+    }
+
+    function leftToStraight(){
+        for(let l=curveL; l>=0; l--){
+            if(blocks[l][0]<=blocks[11][0]){}
+            else{
+                blocks[l][0]-=5;
+            }
+        }
+        curveL-=1;
+    }
+    
 
 </script>
 
