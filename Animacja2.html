@@ -38,6 +38,7 @@
     let angryEntity = [];
     let happyEntity = [];
     let points = 0;
+    let isGameOver = false;
 
     for(let i=0;i<12;i++){
         blocks.push([blockStartX,blockStartY-(i*blockHeight)]);
@@ -47,6 +48,28 @@
     car_image.src = 'assets/car.png';
     car_image.onload = function() {
         drawCar();
+    }
+    function collisions() {
+        if (isGameOver == false) {
+            angryEntity.forEach(angry => {
+                if (angry[1] >= carY && angry[1] <= carY + carHeight && angry[0] >= carX - 10 && angry[0] <= carX + carWidth) {
+                    clearInterval(iRefresh);
+                    ctx.clearRect(0, 0, 800, 600);
+                    ctx.fillStyle = "red";
+                    ctx.font = "150px Arial";
+                    ctx.fillText("Game over", 20, 300);
+                    ctx.font = "70px Arial";
+                    ctx.fillText("Your score: " + points, 160, 400);
+                }
+            });
+            happyEntity.forEach(happy => {
+                if (happy[1] >= carY && happy[1] <= carY + carHeight && happy[0] >= carX - 5 && happy[0] <= carX + carWidth) {
+                    happyEntity.splice(happyEntity.indexOf(happy, 0), 1);
+                    points += 5;
+                    console.log(points);
+                }
+            });
+        }
     }
 
     function refresh() {
@@ -59,7 +82,7 @@
             angryEntity.push([Math.floor(Math.random() * (blocks[10][0]+trackWidth-blockWidth*2 - blocks[10][0] + 1) ) + blocks[10][0]+blockWidth*2,blocks[10][1]]);
         }
         roadMoveDelay-=1;
-        if (roadMoving==0){
+        if (roadMoving===0){
             if(checkL&&blocks[11][0]>20){
                 lInterval = window.setInterval(curveLeft,100);
                 curveLeft();
@@ -73,12 +96,12 @@
             leftToStraight();
             curveL=10;
         }
-        if(blocks[0][0]==blocks[11][0]){
+        if(blocks[0][0]===blocks[11][0]){
             clearInterval(lInterval);
             curveL=11;
             checkL=true;
         }
-        if (roadMoving==1){
+        if (roadMoving===1){
             if(checkR&&blocks[11][0]<760-trackWidth){
                 rInterval = window.setInterval(curveRight,100);
                 curveRight();
@@ -92,7 +115,7 @@
             rightToStraight();
             curveR=10;
         }
-        if(blocks[0][0]==blocks[11][0]){
+        if(blocks[0][0]===blocks[11][0]){
             clearInterval(rInterval);
             curveR=11;
             checkR=true;
@@ -103,9 +126,13 @@
         drawEntity();
         drawCar();
 
+        ctx.fillStyle = "violet";
+        ctx.font = "25px Arial";
+        ctx.fillText("Points: " + points, 10, 25);
+
         angryEntity.forEach(element => {
             element[1]+=5;
-            if(element[1]>600){
+            if(element[1]>1000){
                 angryEntity.splice(angryEntity.indexOf(element, 0),1)
             }
         });
@@ -116,6 +143,7 @@
             }
         });
 
+        collisions();
     }
     iRefresh = window.setInterval(refresh,100);
 
@@ -244,7 +272,7 @@
     function curveLeft(){
         for(let l=11; l>=curveL; l--){
             blocks[l][0]-=5;
-            if(l==11){
+            if(l===11){
                 angryEntity.forEach(element => {
                     element[0]-=5;
                 });
@@ -268,7 +296,7 @@
     function curveRight(){
         for(let l=11; l>=curveR; l--){
             blocks[l][0]+=5;
-            if(l==11){
+            if(l===11){
                 angryEntity.forEach(element => {
                     element[0]+=5;
                 });
