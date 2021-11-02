@@ -16,7 +16,7 @@
     window.addEventListener("keydown", moveCar, false);
 
     let ctx = c.getContext("2d");
-    let carWidth = 45;
+    let carWidth = 40;
     let carHeight = 60;
     let carX = 375;
     let carY = c.height-120;
@@ -31,7 +31,10 @@
     let curveR = 11;
     let checkL = true;
     let checkR = true;
+    let roadMoving = -1;
+    let roadMoveDelay = 0;
     let lInterval;
+    let rInterval;
 
     for(let i=0;i<12;i++){
         blocks.push([blockStartX,blockStartY-(i*blockHeight)]);
@@ -45,12 +48,18 @@
 
     function refresh() {
         ctx.clearRect(0, 0, 800, 600);
-        drawBackground();
-        drawCar();
-        if(checkL){
-            lInterval = window.setInterval(curveLeft,100);
-            curveLeft();
-            checkL = false;
+        if(roadMoveDelay<=0){
+            roadMoving = Math.floor(Math.random() * 3 );
+            roadMoveDelay=20;
+
+        }
+        if (roadMoving==0){
+            if(checkL&&blocks[11][0]>20){
+                lInterval = window.setInterval(curveLeft,100);
+                curveLeft();
+                checkL = false;
+            }
+
         }
         if(blocks[11][0]<=20){
             clearInterval(lInterval);
@@ -58,10 +67,33 @@
             leftToStraight();
             curveL=10;
         }
-        if(blocks[0][0]<=blocks[11][0]){
+        if(blocks[0][0]==blocks[11][0]){
             clearInterval(lInterval);
             curveL=11;
+            checkL=true;
         }
+        if (roadMoving==1){
+            if(checkR&&blocks[11][0]<760-trackWidth){
+                rInterval = window.setInterval(curveRight,100);
+                curveRight();
+                checkR = false;
+            }
+
+        }
+        if(blocks[11][0]>=760-trackWidth){
+            clearInterval(rInterval);
+            rInterval = window.setInterval(rightToStraight,100);
+            rightToStraight();
+            curveR=10;
+        }
+        if(blocks[0][0]==blocks[11][0]){
+            clearInterval(rInterval);
+            curveR=11;
+            checkR=true;
+        }
+
+        drawBackground();
+        drawCar();
 
     }
     window.setInterval(refresh,100);
@@ -180,7 +212,23 @@
         }
         curveL-=1;
     }
-    
+
+    function curveRight(){
+        for(let l=11; l>=curveR; l--){
+            blocks[l][0]+=5;
+        }
+        curveR-=1;
+    }
+
+    function rightToStraight(){
+        for(let l=curveR; l>=0; l--){
+            if(blocks[l][0]>=blocks[11][0]){}
+            else{
+                blocks[l][0]+=5;
+            }
+        }
+        curveR-=1;
+    }
 
 </script>
 
