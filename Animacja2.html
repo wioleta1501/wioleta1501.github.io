@@ -35,6 +35,9 @@
     let roadMoveDelay = 0;
     let lInterval;
     let rInterval;
+    let angryEntity = [];
+    let happyEntity = [];
+    let points = 0;
 
     for(let i=0;i<12;i++){
         blocks.push([blockStartX,blockStartY-(i*blockHeight)]);
@@ -52,7 +55,10 @@
             roadMoving = Math.floor(Math.random() * 3 );
             roadMoveDelay=20;
 
+            happyEntity.push([Math.floor(Math.random() * (blocks[10][0]+trackWidth-blockWidth*2 - blocks[10][0] + 1) ) + blocks[10][0]+blockWidth*2,blocks[10][1]]);
+            angryEntity.push([Math.floor(Math.random() * (blocks[10][0]+trackWidth-blockWidth*2 - blocks[10][0] + 1) ) + blocks[10][0]+blockWidth*2,blocks[10][1]]);
         }
+        roadMoveDelay-=1;
         if (roadMoving==0){
             if(checkL&&blocks[11][0]>20){
                 lInterval = window.setInterval(curveLeft,100);
@@ -92,28 +98,67 @@
             checkR=true;
         }
 
+        forceCarOnTrack();
         drawBackground();
+        drawEntity();
         drawCar();
 
+        angryEntity.forEach(element => {
+            element[1]+=5;
+            if(element[1]>600){
+                angryEntity.splice(angryEntity.indexOf(element, 0),1)
+            }
+        });
+        happyEntity.forEach(element => {
+            element[1]+=5;
+            if(element[1]>600){
+                happyEntity.splice(happyEntity.indexOf(element, 0),1)
+            }
+        });
+
     }
-    window.setInterval(refresh,100);
+    iRefresh = window.setInterval(refresh,100);
 
     refresh();
+
+    function drawEntity(){
+        angryEntity.forEach(element => {
+            ctx.beginPath();
+            ctx.rect(element[0], element[1], 10, 10)
+            ctx.fillStyle = 'black';
+            ctx.fill();
+        });
+        happyEntity.forEach(element => {
+            ctx.beginPath();
+            ctx.arc(element[0], element[1],5,0,2*Math.PI);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+        });
+    }
 
     function moveCar(e) {
         switch(e.keyCode) {
             case 37:
             case 65:
-                if(carX >= blocks[1][0]+blockWidth+5){
-                    carX -= 20;
+                if(carX >= blocks[1][0]+blockWidth){
+                    carX -= 10;
                 }
                 break;
             case 39:
             case 68:
-                if(carX <= blocks[1][0]+trackWidth-50){
-                    carX += 20;
+                if(carX <= blocks[1][0]+trackWidth-carWidth){
+                    carX += 10;
                 }
                 break;
+        }
+    }
+
+    function forceCarOnTrack(){
+        if(carX<=blocks[1][0]+blockWidth){
+            carX += 10;
+        }
+        if(carX >= blocks[1][0]+trackWidth-carWidth){
+            carX -= 10;
         }
     }
 
@@ -199,6 +244,14 @@
     function curveLeft(){
         for(let l=11; l>=curveL; l--){
             blocks[l][0]-=5;
+            if(l==11){
+                angryEntity.forEach(element => {
+                    element[0]-=5;
+                });
+                happyEntity.forEach(element => {
+                    element[0]-=5;
+                });
+            }
         }
         curveL-=1;
     }
@@ -210,12 +263,19 @@
                 blocks[l][0]-=5;
             }
         }
-        curveL-=1;
     }
 
     function curveRight(){
         for(let l=11; l>=curveR; l--){
             blocks[l][0]+=5;
+            if(l==11){
+                angryEntity.forEach(element => {
+                    element[0]+=5;
+                });
+                happyEntity.forEach(element => {
+                    element[0]+=5;
+                });
+            }
         }
         curveR-=1;
     }
