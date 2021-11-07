@@ -1,1 +1,13 @@
-#wrap{position: relative;float: left;width: 100%;border: 1px solid red;}
+#wrap{
+    position: relative;
+    float: left;
+    width: 100%;
+    border: 1px solid red;}
+
+body {
+    height:100%;
+    width:100%;
+    background-image:url("kolo.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;}
+
