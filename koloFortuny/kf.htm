@@ -23,23 +23,40 @@ Jeśli wszystkie litery odgadlismy to dodajemy uzytkownikowi 5 dodatkowych zyć 
 W prawym gornym rogu pokazujemy liczbę zyć
 -->
 
-	<html lang="pl">
-	<head>
-		<meta charset="UTF-8"/>
-		<link rel="stylesheet" type="text/css" href="style.css"/>
-		<title>Kolo fortuny</title>
+<html lang="pl">
 
-	</head>
-	<body>
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<title>Kolo fortuny</title>
+
+</head>
+
+<body>
 
 
 
-		<div id="panstwa"></div>
-		<div id="wrap">
-			<input type="text" placeholder="wpisz litere" id="wpisz_litere" value="mojalitera"/>
-			<button id="graj">GRAJ</button>
-		</div>
-		<script type="text/javascript" src="countries.js"></script>		
-		<script type="text/javascript" src="fortuna.js"></script>
-	</body>
-	</html>
+<div id="panstwa"></div>
+<div id="zycie">Życia: 3</div>
+<div id="punkty">Odgadnięte państwa: 0</div>
+<div id="podaj">Podaj literę:</div>
+<div id="wrap">
+	<input onfocus="this.value=''" type="text" placeholder="Wpisz tutaj literę" id="wpisz_litere" value="" />
+	<button id="graj" class="button">GRAJ</button>
+</div>
+
+<div id="autor" style="display: none;">
+	<div id="right" >
+		<a href="#" class="button">X</a>
+	</div>
+		Wioleta Borkowska
+		<br>
+		nr indeksu: 224790
+		<br>
+		cos od siebie :)
+</div>
+<script type="text/javascript" src="countries.js"></script>
+<script type="text/javascript" src="fortuna.js"></script>
+</body>
+
+</html>
