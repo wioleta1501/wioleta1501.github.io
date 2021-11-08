@@ -3,7 +3,7 @@ let game = {
   zycia: 3,
 };
 
-
+let chooseCountry = 0;
 
 //LISTENERS
 
@@ -42,7 +42,7 @@ function startBoard() {
   document.getElementById("panstwa").innerHTML = "";
   document.getElementById("podaj").style.display = "block";
 
-  let chooseCountry = getRandomInt(0, data.length)
+  chooseCountry = getRandomInt(0, data.length)
   console.log(data[chooseCountry]['country']);
 
   let newDiv = document.createElement("div");
@@ -104,7 +104,7 @@ function Sprawdz_Litery() {
   } else {
     changeLife(-1);
     if (game.zycia === 0) {
-      alert("Przegrana!");
+      alert("Przegrana! \nPoprawna odpowiedź to: " + (data[chooseCountry]['country']).toString());
       startBoard()
       changeLife(3);
     }
