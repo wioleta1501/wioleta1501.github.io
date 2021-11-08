@@ -28,6 +28,7 @@ function startGame() {
   newDiv.innerHTML = "AUTOR";
   newDiv.addEventListener("click", toggleAutor);
   document.getElementById("panstwa").append(newDiv);
+  document.getElementById("wrap").style.display = "none";
 
 }
 
@@ -42,6 +43,7 @@ function startBoard() {
   document.getElementById("panstwa").innerHTML = "";
   document.getElementById("podaj").style.display = "block";
   document.getElementById("wrong").innerHTML = ""
+  document.getElementById("wrap").style.display = "";
 
   chooseCountry = getRandomInt(0, data.length)
   console.log(data[chooseCountry]['country']);
@@ -107,7 +109,7 @@ function Sprawdz_Litery() {
     document.getElementById("wrong").innerHTML += " " + (litera);
     if (game.zycia === 0) {
       alert("Przegrana! \nPoprawna odpowiedź to: " + (data[chooseCountry]['country']).toString());
-      startBoard()
+      startBoard();
       changeLife(3);
     }
   }
