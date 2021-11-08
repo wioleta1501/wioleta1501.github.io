@@ -41,8 +41,9 @@ W prawym gornym rogu pokazujemy liczbę zyć
 <div id="punkty">Odgadnięte państwa: 0</div>
 <div id="podaj">Podaj literę:</div>
 <div id="wrap">
-	<input onfocus="this.value=''" type="text" placeholder="Wpisz tutaj literę" id="wpisz_litere" value="" />
+	<input onfocus="this.value=''" type="text" placeholder="Wpisz tutaj literę" pattern="[a-zA-Z]{1}" id="wpisz_litere" value="" onkeypress="return /[a-z]/i.test(event.key)" maxlength="1"/>
 	<button id="graj" class="button">SPRAWDŹ</button>
+	<div id="wrong"> </div>
 </div>
 
 <div id="autor" style="display: none;">
@@ -55,6 +56,7 @@ W prawym gornym rogu pokazujemy liczbę zyć
 		<br>
 		cos od siebie :)
 </div>
+
 <script type="text/javascript" src="countries.js"></script>
 <script type="text/javascript" src="fortuna.js"></script>
 </body>

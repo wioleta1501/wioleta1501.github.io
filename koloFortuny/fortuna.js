@@ -41,6 +41,7 @@ function toggleAutor() {
 function startBoard() {
   document.getElementById("panstwa").innerHTML = "";
   document.getElementById("podaj").style.display = "block";
+  document.getElementById("wrong").innerHTML = ""
 
   chooseCountry = getRandomInt(0, data.length)
   console.log(data[chooseCountry]['country']);
@@ -103,6 +104,7 @@ function Sprawdz_Litery() {
     }
   } else {
     changeLife(-1);
+    document.getElementById("wrong").innerHTML += " " + (litera);
     if (game.zycia === 0) {
       alert("Przegrana! \nPoprawna odpowiedź to: " + (data[chooseCountry]['country']).toString());
       startBoard()

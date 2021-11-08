@@ -141,5 +141,10 @@ body {
     top:1px;
 }
 
-::-webkit-input-placeholder::first-letter {
+#wrong{
+    width: auto;
+    text-decoration: line-through;
+    font-size: 25px;
+    background-color: red;
+    font-family: Arial, Helvetica, sans-serif;
 }
