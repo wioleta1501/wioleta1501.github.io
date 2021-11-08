@@ -4,6 +4,7 @@ let game = {
 };
 
 let chooseCountry = 0;
+let usedLetters = [];
 
 //LISTENERS
 
@@ -90,6 +91,10 @@ function Sprawdz_Litery() {
   let litera = document.getElementById("wpisz_litere").value;
   let letters = document.getElementsByClassName("letter");
   let guessed = false;
+  if (usedLetters.includes(litera)) {
+    alert("Ta litera była już podana, wpisz inną");
+    return;
+  }
   for (let i = 0; i < letters.length; i += 1) {
     if (letters[i].innerHTML.toUpperCase().localeCompare(litera.toUpperCase()) === 0) {
       letters[i].classList.remove("hidden");
@@ -97,6 +102,8 @@ function Sprawdz_Litery() {
     }
   }
 
+  usedLetters.push(litera);
+  
   if (guessed) {
     if (win()) {
       alert("Wygrana!");
