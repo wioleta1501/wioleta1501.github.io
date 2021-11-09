@@ -110,6 +110,7 @@ function Sprawdz_Litery() {
       startBoard();
       changeLife(5);
       changePoints(1)
+      usedLetters = [];
     }
   } else {
     changeLife(-1);
@@ -118,6 +119,7 @@ function Sprawdz_Litery() {
       alert("Przegrana! \nPoprawna odpowiedź to: " + (data[chooseCountry]['country']).toString());
       startBoard();
       changeLife(3);
+      usedLetters = [];
     }
   }
 }
