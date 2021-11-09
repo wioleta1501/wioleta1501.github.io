@@ -10,8 +10,15 @@ let usedLetters = [];
 
 document.getElementById("graj").addEventListener("click", Sprawdz_Litery);
 document.getElementById("right").addEventListener("click", toggleAutor);
-//alert(game.zycia);
-
+document.getElementById("wpisz_litere").addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("graj").click();
+  }
+});
 
 //FUNKCJE
 function startGame() {
