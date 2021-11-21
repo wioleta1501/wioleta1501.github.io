@@ -6,6 +6,18 @@
     <title>PESEL WEBWORKER</title>
 
 </head>
-
 <body>
+<div id="inputs">
+    <input onfocus="this.value=''" type="text" placeholder="Podaj rok" pattern="[0-9]{4,4}" id="year_input" value="" onkeypress="return /[0-9]/i.test(event.key)" maxlength="4"/>
+    <br><br>
+    <input onfocus="this.value=''" type="text" placeholder="Podaj miesiąc (liczbowo)" pattern="[0-2]{1,2}" id="month_input" value="" onkeypress="return /[0-9]/i.test(event.key)" maxlength="2"/>
+    <br><br>
+    <input onfocus="this.value=''" type="text" placeholder="Podaj dzień" pattern="[0-9]{1,2}" id="day_input" value="" onkeypress="return /[0-9]/i.test(event.key)" maxlength="2"/>
+    <br><br>
+</div>
+<div id="buttons">
+    <button id="validate">Waliduj</button>
+    <button id="show">Pokaż</button>
+    <button id="find">Znajdź</button>
+</div>
 </body>
